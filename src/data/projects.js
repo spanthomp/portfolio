@@ -19,9 +19,9 @@ tags: ['C#', '.NET', 'Node.js', 'Web Design', 'Node.js', 'REACT', 'Flutter'],   
     description:
       'A Lord of the Rings quote generator. One does not simply browse the internet without a little wisdom from Middle-earth.',
     tags: ['JavaScript', 'API', 'LOTR'],
-    liveUrl: 'https://your-oqtrto-url.netlify.app',
-    githubUrl: 'https://github.com/yourname/oqtrto',
-    addressBar: 'https://your-oqtrto-url.netlify.app',
+  liveUrl: 'https://one-quote-to-rule-them-all.netlify.app',  // ← your real URL
+    githubUrl: 'https://github.com/spanthomp/oqtrta',
+    addressBar: 'https://one-quote-to-rule-them-all.netlify.app',
   },
   {
     id: 'lcars',
