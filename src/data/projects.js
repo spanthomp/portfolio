@@ -74,16 +74,17 @@ tags: ['C#', '.NET', 'Node.js', 'Web Design', 'Node.js', 'REACT', 'Flutter'],   
     addressBar: 'https://your-dateomatc-url.netlify.app',
   },
     {
-    id: 'dailydawg',
-    label: 'Daily Dawg',
+    id: 'dailydoggo',
+    hasIframe: true,
+    label: 'Daily Doggo',
     icon: '🐶',
-    title: 'Daily Dawg',
+    title: 'Daily Doggo',
     description:
       'Randomly generates images of dogs. Because every day is better with a dog in it.',
     tags: ['JavaScript', 'API', 'Dog CEO'],
-    liveUrl: 'https://your-dailydawg-url.netlify.app',
-    githubUrl: 'https://github.com/yourname/daily-dawg',
-    addressBar: 'https://your-dailydawg-url.netlify.app',
+    liveUrl: 'https://dailydoggo.netlify.app',  // ← your real URL
+    githubUrl: 'https://github.com/spanthomp/daily-doggo',
+    addressBar: 'https://your-dailydoggo-url.netlify.app',
   },
   {
     id: 'stardew',

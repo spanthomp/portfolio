@@ -8,11 +8,26 @@ import projects from './data/projects';
 
 export default function App() {
   const [openWindows, setOpenWindows] = useState([]);
+  const [minimisedWindows, setMinimisedWindows] = useState([]);
   const [startMenuOpen, setStartMenuOpen] = useState(false);
   const [zCounter, setZCounter] = useState(100);
   const [windowZMap, setWindowZMap] = useState({});
 
+  const bringToFront = (id) => {
+    setZCounter((z) => {
+      const next = z + 1;
+      setWindowZMap((m) => ({ ...m, [id]: next }));
+      return next;
+    });
+  };
+
   const openWindow = (id) => {
+    // If minimised, restore it
+    if (minimisedWindows.includes(id)) {
+      setMinimisedWindows((prev) => prev.filter((w) => w !== id));
+      bringToFront(id);
+      return;
+    }
     setOpenWindows((prev) => (prev.includes(id) ? prev : [...prev, id]));
     setZCounter((z) => {
       const next = z + 1;
@@ -24,45 +39,60 @@ export default function App() {
 
   const closeWindow = (id) => {
     setOpenWindows((prev) => prev.filter((w) => w !== id));
+    setMinimisedWindows((prev) => prev.filter((w) => w !== id));
   };
 
-  const bringToFront = (id) => {
-    setZCounter((z) => {
-      const next = z + 1;
-      setWindowZMap((m) => ({ ...m, [id]: next }));
-      return next;
-    });
+  const minimiseWindow = (id) => {
+    setMinimisedWindows((prev) => prev.includes(id) ? prev : [...prev, id]);
+  };
+
+  const handleTaskbarClick = (id) => {
+    if (minimisedWindows.includes(id)) {
+      // Restore
+      setMinimisedWindows((prev) => prev.filter((w) => w !== id));
+      bringToFront(id);
+    } else {
+      // Minimise
+      minimiseWindow(id);
+    }
   };
 
   useEffect(() => {
     setTimeout(() => openWindow('about'), 300);
   }, []);
 
+  const allOpenWindows = [...openWindows];
+
   return (
     <>
       <Desktop onOpenWindow={openWindow} />
 
-      {projects.map((project) =>
-        openWindows.includes(project.id) ? (
-          project.isFolder ? (
-            <FolderWindow
-              key={project.id}
-              project={project}
-              zIndex={windowZMap[project.id] || 100}
-              onClose={() => closeWindow(project.id)}
-              onFocus={() => bringToFront(project.id)}
-            />
-          ) : (
+      {projects.map((project) => {
+        if (!openWindows.includes(project.id)) return null;
+        const isMinimised = minimisedWindows.includes(project.id);
+
+        return project.isFolder ? (
+          <FolderWindow
+            key={project.id}
+            project={project}
+            zIndex={windowZMap[project.id] || 100}
+            onClose={() => closeWindow(project.id)}
+            onFocus={() => bringToFront(project.id)}
+            onMinimise={() => minimiseWindow(project.id)}
+            style={{ display: isMinimised ? 'none' : undefined }}
+          />
+        ) : (
+          <div key={project.id} style={{ display: isMinimised ? 'none' : undefined }}>
             <Window
-              key={project.id}
               project={project}
               zIndex={windowZMap[project.id] || 100}
               onClose={() => closeWindow(project.id)}
               onFocus={() => bringToFront(project.id)}
+              onMinimise={() => minimiseWindow(project.id)}
             />
-          )
-        ) : null
-      )}
+          </div>
+        );
+      })}
 
       {startMenuOpen && (
         <>
@@ -76,7 +106,8 @@ export default function App() {
 
       <Taskbar
         openWindows={openWindows}
-        onOpenWindow={openWindow}
+        minimisedWindows={minimisedWindows}
+        onTaskbarClick={handleTaskbarClick}
         onCloseWindow={closeWindow}
         startMenuOpen={startMenuOpen}
         onToggleStartMenu={() => setStartMenuOpen((v) => !v)}

@@ -4,7 +4,8 @@ import './Taskbar.css';
 
 export default function Taskbar({
   openWindows,
-  onCloseWindow,
+  minimisedWindows,
+  onTaskbarClick,
   startMenuOpen,
   onToggleStartMenu,
 }) {
@@ -24,7 +25,7 @@ export default function Taskbar({
     return () => clearInterval(id);
   }, []);
 
-  const openProject = (id) => projects.find((p) => p.id === id);
+  const getProject = (id) => projects.find((p) => p.id === id);
 
   return (
     <div className="taskbar">
@@ -38,12 +39,14 @@ export default function Taskbar({
 
       <div className="taskbar-tasks">
         {openWindows.map((id) => {
-          const project = openProject(id);
+          const project = getProject(id);
+          const isMinimised = minimisedWindows.includes(id);
           return (
             <button
               key={id}
-              className="taskbar-task open"
-              onClick={() => onCloseWindow(id)}
+              className={`taskbar-task${isMinimised ? ' minimised' : ' open'}`}
+              onClick={() => onTaskbarClick(id)}
+              title={project?.label}
             >
               <span>{project?.icon}</span>
               <span className="task-label">{project?.label}</span>
