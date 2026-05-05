@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Tahoma:wght@400;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --xp-blue: #0a246a;
+  --xp-blue-mid: #3a6ea5;
+  --xp-blue-light: #4a90d9;
+  --xp-window-border: #0831b0;
+  --xp-title-bar: linear-gradient(180deg, #4a88d4 0%, #2159b0 8%, #1a4fa8 40%, #1a4fa8 88%, #164496 93%, #0831b0 100%);
+  --xp-close-btn: linear-gradient(180deg, #f07070 0%, #d03030 40%, #b01010 100%);
+  --xp-btn-face: linear-gradient(180deg, #dce9fb 0%, #c0d9f7 100%);
+  --xp-btn-primary: linear-gradient(180deg, #6eb0f0 0%, #3a8ee0 40%, #1a70c8 100%);
+  --xp-btn-primary-hover: linear-gradient(180deg, #80c0f8 0%, #4a9ef0 40%, #2a80d8 100%);
+  --xp-start-green: linear-gradient(180deg, #5cb85c 0%, #3c8c3c 40%, #2a6a2a 100%);
+  --xp-taskbar: linear-gradient(180deg, #245edb 0%, #1a4fc8 8%, #1a4fc8 92%, #0b1f9a 100%);
+}
+
+body {
+  font-family: 'Tahoma', Tahoma, sans-serif;
+  font-size: 11px;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}

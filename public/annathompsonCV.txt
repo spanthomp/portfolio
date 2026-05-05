@@ -1,0 +1,61 @@
+Anna Thompson Jesmond
+Newcastle Upon Tyne
+
+Anna.thomp@outlook.com
++44 7711021508
+LinkedIn
+
+
+
+About me:
+A creative and detail-oriented full-stack developer specialising in Blazor and .NET. A strong focus on building fast, secure, and scalable systems that follow industry standards and best practices. Proven ability to collaborate effectively with clients and teams, with a keen eye for clean, modern UI design and a passion for staying on top of the latest front-end trends and technologies.
+
+
+
+Key skills:
+* Blazor
+* C#
+* Auth0
+* Git
+
+
+
+* .NET
+* ASP.NET
+* SQL/ Linq
+* REST APIs
+
+
+
+* Azure Devops
+* Adobe Suite/ Figma
+* UI/UX Principles
+* Flutter
+
+
+
+
+Experience:
+Developer | Greenlord Studios | 2021 - Present
+Key Projects:
+Online eCommerce Rental Platform
+* Led admin panel development using Blazor and .NET, implementing secure
+Auth0-based authentication and authorisation, contributing to UI/UX decisions
+to ensure interface was intuitive and aligned with business needs.
+Digital Inspection System for Public Sector
+* Translated complex regulatory requirements into user-friendly solutions by collaborating early in the design process and ensuring legal compliance throughout.
+* Contributed to front-end development and improved backend efficiency by optimising and refactoring API endpoints significantly reducing response times.
+* Played a key role in enhancing system security and data handling, contributing to a successful penetration test.
+* Designed Figma prototypes from scratch, taking creative lead and making key decisions to improve usability, accessibility, and overall UX.
+
+Cross-Platform Mobile App
+* Started production for a University mobile app using Flutter. Initiated and led
+development from concept to early prototype, implementing Firebase backend with secure sign-in and user management features, database architecture and UI design documentation.
+Education
+Bachelor of Science in Computer Science with Web Development
+Northumbria University | 2018 - 2021
+2:1 (69%)
+
+
+References
+Joshua Legg | Greenlord Studios - Director Joshua.legg@greenlordstudios.co.uk
