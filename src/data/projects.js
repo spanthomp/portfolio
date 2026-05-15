@@ -54,6 +54,7 @@ tags: ['C#', '.NET', 'Node.js', 'Web Design', 'Node.js', 'REACT', 'Flutter'],   
   },
   {
     id: 'peekzoo',
+        hasIframe: true,
     label: 'Peek-a-Zoo',
     icon: '🌍',
     title: 'Peek-a-Zoo',
