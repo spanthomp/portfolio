@@ -8,7 +8,11 @@
   border-top: 1px solid rgba(255, 255, 255, 0.4);
   flex-shrink: 0;
   z-index: 200;
-  position: relative;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
 }
 
 /* Start Button */
@@ -51,7 +55,14 @@
   flex: 1;
   display: flex;
   gap: 3px;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.taskbar-tasks::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
 }
 
 .taskbar-task {
@@ -106,6 +117,54 @@
   flex-shrink: 0;
 }
 
-@media (max-width: 600px) {
-  .taskbar-task { display: none; }
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .taskbar {
+    height: 50px;
+    padding: 0 6px;
+  }
+
+  .start-btn {
+    height: 40px;
+    padding: 0 12px 0 8px;
+    font-size: 14px;
+  }
+
+  .start-icon {
+    font-size: 20px;
+  }
+
+  .taskbar-tasks {
+    gap: 4px;
+  }
+
+  .taskbar-task {
+    min-width: 50px;
+    flex: 0 0 auto;
+  }
+
+  .task-label {
+    display: none;
+  }
+
+  .taskbar-clock {
+    padding: 0 8px;
+    height: 36px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .taskbar {
+    gap: 2px;
+  }
+
+  .start-btn {
+    padding: 0 10px 0 8px;
+    font-size: 12px;
+  }
+
+  .start-icon {
+    font-size: 18px;
+  }
 }

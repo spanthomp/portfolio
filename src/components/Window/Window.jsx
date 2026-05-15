@@ -2,13 +2,14 @@ import { useState, useRef, useEffect } from 'react';
 import './Window.css';
 
 export default function Window({ project, zIndex, onClose, onFocus, onMinimise }) {
-  const { icon, title, liveUrl, hasIframe } = project;
+  const { icon, title, description, tags, liveUrl, githubUrl, linkedinUrl, hasIframe } = project;
 
   const isMailto = liveUrl && liveUrl.startsWith('mailto:');
 
   const windowRef = useRef(null);
   const [isMaximised, setIsMaximised] = useState(false);
   const [position, setPosition] = useState({ x: null, y: null });
+  const [preMaxPosition, setPreMaxPosition] = useState({ x: 0, y: 0 });
   const dragging = useRef(false);
   const dragOffset = useRef({ x: 0, y: 0 });
 
@@ -16,12 +17,19 @@ export default function Window({ project, zIndex, onClose, onFocus, onMinimise }
   useEffect(() => {
     const el = windowRef.current;
     if (!el) return;
-    const w = el.offsetWidth;
-    const h = el.offsetHeight;
-    setPosition({
-      x: Math.max(0, (window.innerWidth - w) / 2),
-      y: Math.max(0, (window.innerHeight - h) / 4),
-    });
+    
+    // Small delay to ensure dimensions are calculated
+    setTimeout(() => {
+      const w = el.offsetWidth;
+      const h = el.offsetHeight;
+      const centerX = Math.max(0, (window.innerWidth - w) / 2);
+      const centerY = Math.max(0, (window.innerHeight - h) / 4);
+      
+      setPosition({
+        x: centerX,
+        y: centerY,
+      });
+    }, 10);
   }, []);
 
   // Dragging
@@ -77,6 +85,22 @@ export default function Window({ project, zIndex, onClose, onFocus, onMinimise }
     };
   }, [position]);
 
+  // Toggle maximize
+  const toggleMaximise = () => {
+    if (!isMaximised) {
+      // Save current position before maximizing
+      setPreMaxPosition({ x: position.x, y: position.y });
+    }
+    setIsMaximised((v) => !v);
+  };
+
+  // Restore position after un-maximizing
+  useEffect(() => {
+    if (!isMaximised && preMaxPosition.x !== null) {
+      setPosition(preMaxPosition);
+    }
+  }, [isMaximised]);
+
   const windowStyle = isMaximised
     ? {
         zIndex,
@@ -89,10 +113,10 @@ export default function Window({ project, zIndex, onClose, onFocus, onMinimise }
       }
     : {
         zIndex,
-        top: position.y ?? 60,
-        left: position.x ?? '50%',
-        transform: position.x === null ? 'translateX(-50%)' : 'none',
-        width: hasIframe ? '760px' : '400px',
+        top: position.y !== null ? position.y : '50%',
+        left: position.x !== null ? position.x : '50%',
+        transform: (position.x === null || position.y === null) ? 'translate(-50%, -50%)' : 'none',
+        width: hasIframe ? '760px' : '460px',
         maxWidth: '95vw',
       };
 
@@ -108,7 +132,7 @@ export default function Window({ project, zIndex, onClose, onFocus, onMinimise }
         className="title-bar"
         onMouseDown={onTitleMouseDown}
         onTouchStart={onTitleTouchStart}
-        onDoubleClick={() => setIsMaximised(v => !v)}
+        onDoubleClick={toggleMaximise}
       >
         <span className="title-bar-icon">{icon}</span>
         <span className="title-bar-text">{title}</span>
@@ -120,7 +144,7 @@ export default function Window({ project, zIndex, onClose, onFocus, onMinimise }
           >_</button>
           <button
             className="tb-btn max"
-            onClick={(e) => { e.stopPropagation(); setIsMaximised(v => !v); }}
+            onClick={(e) => { e.stopPropagation(); toggleMaximise(); }}
             title={isMaximised ? 'Restore' : 'Maximise'}
           >{isMaximised ? '❐' : '□'}</button>
           <button
@@ -142,16 +166,48 @@ export default function Window({ project, zIndex, onClose, onFocus, onMinimise }
           />
         ) : (
           <div className="window-simple">
-            {isMailto && (
-              <button className="xp-btn primary" onClick={() => window.open(liveUrl)}>
-                ✉️ Email Me
-              </button>
+            {/* Show description for About window */}
+            {description && (
+              <div className="window-content">
+                <p style={{ marginBottom: '16px', lineHeight: '1.6' }}>{description}</p>
+                
+                {/* Show tags if available */}
+                {tags && tags.length > 0 && (
+                  <div className="tags-container">
+                    <strong>Skills:</strong>
+                    <div className="tags">
+                      {tags.map((tag) => (
+                        <span key={tag} className="tag">{tag}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             )}
-            {liveUrl && !isMailto && (
-              <button className="xp-btn primary" onClick={() => window.open(liveUrl, '_blank')}>
-                🌐 Open in Browser
-              </button>
-            )}
+
+            {/* Buttons */}
+            <div className="window-buttons">
+              {isMailto && (
+                <button className="xp-btn primary" onClick={() => window.open(liveUrl)}>
+                  ✉️ Email Me
+                </button>
+              )}
+              {liveUrl && !isMailto && (
+                <button className="xp-btn primary" onClick={() => window.open(liveUrl, '_blank')}>
+                  🌐 Open Website
+                </button>
+              )}
+              {githubUrl && (
+                <button className="xp-btn" onClick={() => window.open(githubUrl, '_blank')}>
+                  💻 View on GitHub
+                </button>
+              )}
+              {linkedinUrl && (
+                <button className="xp-btn" onClick={() => window.open(linkedinUrl, '_blank')}>
+                  💼 LinkedIn
+                </button>
+              )}
+            </div>
           </div>
         )}
       </div>

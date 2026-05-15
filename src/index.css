@@ -28,11 +28,43 @@ body {
   display: flex;
   flex-direction: column;
   background: #000;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  overflow: hidden;
+}
+
+/* Mobile improvements */
+@media (max-width: 768px) {
+  body {
+    font-size: 12px;
+  }
+
+  /* Ensure taskbar is always visible */
+  #root {
+    position: relative;
+  }
+
+  /* Prevent zooming on double tap */
+  * {
+    touch-action: manipulation;
+  }
+
+  /* Better scrolling on mobile */
+  .window-body {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Prevent body scroll */
+html, body {
+  position: fixed;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
 }
